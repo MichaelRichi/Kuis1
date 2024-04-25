@@ -4,8 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistem Pembelian di Toko Jaya</title>
+    <script>
+        function hitungTotal() {
+    document.getElementById("bootingAnimation").style.display = "block";
+
+    setTimeout(function() {
+        var namaPelanggan = document.getElementById("namaPelanggan").value;
+        var biayaJasa = parseFloat(document.getElementById("biayaJasa").value);
+        var biayaSparepart = parseFloat(document.getElementById("biayaSparepart").value);
+        var kodeMember = document.getElementById("kodeMember").value;
+
+        var subTotal = biayaJasa + biayaSparepart;
+
+        var persentaseDiskon = 0;
+        var diskonInfo = "";
+
+        if (kodeMember === "B") {
+            persentaseDiskon = 25;
+            diskonInfo = "25% (Member, Pelanggan baru)";
+        } else if (kodeMember === "M") {
+            persentaseDiskon = 20;
+            diskonInfo = "20% (Member lama)";
+        } else {
+            persentaseDiskon = 10;
+            diskonInfo = "10% (Non member)";
+        }
+
+        var nilaiDiskon = (persentaseDiskon / 100) * subTotal;
+        var dpp = subTotal - nilaiDiskon;
+        var ppn = 0.11 * dpp;
+        var grandTotal = dpp + ppn;
+
+        document.getElementById("hasil").innerHTML = "Nama Pelanggan: " + namaPelanggan + "<br>" +
+                                                      "Sub Total: Rp " + subTotal.toFixed(2) + "<br>" +
+                                                      "Diskon: Rp " + nilaiDiskon.toFixed(2) + " (" + diskonInfo + ")" + "<br>" +
+                                                      "DPP: Rp " + dpp.toFixed(2) + "<br>" +
+                                                      "PPN: Rp " + ppn.toFixed(2) + "<br>" +
+                                                      "Grand Total: Rp " + grandTotal.toFixed(2);
+
+        document.getElementById("kodeMemberInfo").innerHTML = "Kode Member: " + kodeMember + " - " + diskonInfo;
+
+        document.getElementById("bootingAnimation").style.display = "none";
+    }, 2000); // Waktu simulasi proses
+}
+
+function resetForm() {
+    document.getElementById("namaPelanggan").value = "";
+    document.getElementById("biayaJasa").value = "";
+    document.getElementById("biayaSparepart").value = "";
+    document.getElementById("kodeMember").value = "";
+    document.getElementById("hasil").innerHTML = "";
+    document.getElementById("kodeMemberInfo").innerHTML = "";
+}
+    </script>
 </head>
 <body>
-    
+    <script type="text/javascript"></script>
+    <h2>Program Hitung PPN Bengkel AMJ Jaya</h2>
+    <form>
+        <label for="nama">Nama Pelanggan:</label><br>
+        <input type="text" id="nama" name="namaPelanggan"><br>
+        <label for="Jasa">Biaya Jasa (Rp):</label><br>
+        <input type="number" id="biayaJasa" name="biayaJasa"><br>
+        <label for="Sparepart">Biaya Sparepart (Rp):</label><br>
+        <input type="number" id="biayaSparepart" name="biayaSparepart"><br>
+        <label for="Member">Kode Member (B/M/N):</label><br>
+        <input type="text" id="kodeMember" name="kodeMember"><br><br>
+        <button type="button" onclick="hitungTotal()">Hitung Total</button>
+        <button type="button" onclick="resetForm()" class="reset">Reset</button>
+    </form>
+    <div id="kodeMemberInfo"></div>
+    <div id="hasil"></div>
 </body>
 </html>

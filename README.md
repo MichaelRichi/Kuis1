@@ -11,5 +11,5 @@
 7. firebase projects:create
 8. flutterfire configure
 9. flutter pub add firebase_core
-10. flutter pub add Auth
-11. flutter pub add database
+10. flutter pub add firebase_auth
+11. flutter pub add firebase_database
